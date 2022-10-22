@@ -2,15 +2,14 @@
 
 namespace Core\UseCase\Genre;
 
-use Core\Domain\Entity\Genre;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\CategoryRepositoryInterface;
 use Core\Domain\Repository\GenreRepositoryInterface;
-use Core\DTO\Genre\CreateGenre\GenreCreateInputDto;
-use Core\DTO\Genre\CreateGenre\GenreCreateOutputDto;
+use Core\DTO\Genre\UpdateGenre\GenreUpdateInputDto;
+use Core\DTO\Genre\UpdateGenre\GenreUpdateOutputDto;
 use Core\UseCase\Interfaces\TransactionInterface;
 
-class CreateGenreUseCase
+class UpdateGenreUseCase
 {
 
     private GenreRepositoryInterface $repository;
@@ -24,20 +23,25 @@ class CreateGenreUseCase
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function execute(GenreCreateInputDto $input): GenreCreateOutputDto
+    public function execute(GenreUpdateInputDto $input): GenreUpdateOutputDto
     {
+        $genre = $this->repository->findById($input->id);
         try {
-            $genre = new Genre(
+
+            $genre->update(
                 name: $input->name,
-                isActive: $input->isActive,
-                categoriesId: $input->categoriesId
             );
+
+            foreach ($input->categoriesId as $categoryId) {
+                $genre->addCategory($categoryId);
+            }
+
             $this->validateCategoriesId($input->categoriesId);
 
-            $genreDb = $this->repository->insert($genre);
+            $genreDb = $this->repository->update($genre);
             $this->transaction->commit();
 
-            return new GenreCreateOutputDto(
+            return new GenreUpdateOutputDto(
                 id: (string)$genre->id,
                 name: $genreDb->name,
                 is_active: $genreDb->isActive,
