@@ -2,6 +2,7 @@
 
 namespace Core\UseCase\Genre;
 
+use App\Repositories\Eloquent\GenreEloquentRepository;
 use Core\Domain\Entity\Genre;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\CategoryRepositoryInterface;
@@ -13,6 +14,9 @@ use Core\UseCase\Interfaces\TransactionInterface;
 class CreateGenreUseCase
 {
 
+    /**
+     * @var $repository GenreEloquentRepository
+    */
     private GenreRepositoryInterface $repository;
     private TransactionInterface $transaction;
     private CategoryRepositoryInterface $categoryRepository;

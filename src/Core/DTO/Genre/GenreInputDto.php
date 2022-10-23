@@ -2,7 +2,7 @@
 
 namespace Core\DTO\Genre;
 
-class GenreInputDto
+class GenreInputDto extends \Core\DTO\Genre\ListGenre\ListGenresInputDto
 {
     /**
      * GenreInputDto constructor.
