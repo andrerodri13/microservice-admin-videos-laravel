@@ -15,6 +15,9 @@ use Core\UseCase\Category\DeleteCategoryUseCase;
 use Core\UseCase\Category\ListCategoriesUseCase;
 use Core\UseCase\Category\ListCategoryUseCase;
 use Core\UseCase\Category\UpdateCategoryUseCase;
+use Faker\Generator;
+use Faker\Guesser\Name;
+use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -48,10 +51,15 @@ class CategoryController extends Controller
 
     public function store(StoreCategoryRequest $request, CreateCategoryUseCase $useCase)
     {
+//        $faker  = Container::getInstance()->make(Generator::class);
+//        $name = $faker->sentence(2);
+
         $response = $useCase->execute(
             input: new CategotyCreateInputDto(
                 name: $request->name,
+//                name: $name,
                 description: $request->description ?? '',
+//                description: $name,
                 isActive: (bool)$request->is_active ?? true
             )
         );
@@ -71,7 +79,8 @@ class CategoryController extends Controller
     {
         $response = $useCase->execute(new CategoryUpdateInputDto(
             id: $id,
-            name: $request->name
+            name: $request->name,
+            isActive: (bool)$request->is_active
         ));
         return (new CategoryResource($response))
             ->response();

@@ -81,7 +81,7 @@ class CategoryEloquentRepository implements CategoryRepositoryInterface
             ]);
         $categoryDb->refresh();
 
-        return $this->toCategory($category);
+        return $this->toCategory($categoryDb);
     }
 
     public function delete(string $categoryId): bool
@@ -99,7 +99,7 @@ class CategoryEloquentRepository implements CategoryRepositoryInterface
             name: $object->name,
             description: $object->description,
         );
-        ((bool)$object->isActive) ? $entity->activate() : $entity->disable();
+        ((bool)$object->is_active) ? $entity->activate() : $entity->disable();
 
         return $entity;
     }

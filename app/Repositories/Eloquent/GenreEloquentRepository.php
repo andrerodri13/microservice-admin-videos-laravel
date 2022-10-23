@@ -3,7 +3,9 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Genre as GenreModel;
+use App\Repositories\Presenters\PaginatorPresenter;
 use Core\Domain\Entity\Genre as GenreEntity;
+use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\GenreRepositoryInterface;
 use Core\Domain\Repository\PaginationInterface;
 use Core\Domain\ValueObject\Uuid;
@@ -31,7 +33,7 @@ class GenreEloquentRepository implements GenreRepositoryInterface
             'created_at' => $genre->createdAt()
         ]);
 
-        if(count($genre->categoriesId) > 0) {
+        if (count($genre->categoriesId) > 0) {
             $genreDb->categories()->sync($genre->categoriesId);
         }
 
@@ -40,30 +42,65 @@ class GenreEloquentRepository implements GenreRepositoryInterface
 
     public function findById(string $id): GenreEntity
     {
-        // TODO: Implement findById() method.
+        if (!$genreDb = $this->model->find($id)) {
+            throw new NotFoundException("Genre {$id} not found");
+        }
+        return $this->toGenre($genreDb);
     }
 
     public function findAll(string $filter = '', $order = 'DESC'): array
     {
-        // TODO: Implement findAll() method.
+        $result = $this->model
+            ->where(function ($query) use ($filter) {
+                if ($filter) {
+                    $query->where('name', 'LIKE', "{$filter}");
+                }
+            })
+            ->orderBy('name', $order)
+            ->get();
+
+        return $result->toArray();
     }
 
     public function paginate(string $filter = '', $order = 'DESC', int $page = 1, int $totalPage = 15): PaginationInterface
     {
-        // TODO: Implement paginate() method.
+        $result = $this->model
+            ->where(function ($query) use ($filter) {
+                if ($filter) {
+                    $query->where('name', 'LIKE', "{$filter}");
+                }
+            })
+            ->orderBy('name', $order)
+            ->paginate($totalPage);
+
+        return new PaginatorPresenter($result);
     }
 
     public function update(GenreEntity $genre): GenreEntity
     {
-        // TODO: Implement update() method.
+        if (!$genreDb = $this->model->find($genre->id)) {
+            throw new NotFoundException("Genre {$genre->id} not found");
+        }
+
+        $genreDb->update([
+            'name' => $genre->name
+        ]);
+
+        $genreDb->refresh();
+
+        return $this->toGenre($genreDb);
     }
 
     public function delete(string $id): bool
     {
-        // TODO: Implement delete() method.
+        if (!$genreDb = $this->model->find($id)) {
+            throw new NotFoundException("Genre {$id} not found");
+        }
+
+        return $genreDb->delete();
     }
 
-    private function toGenre(object $object): GenreEntity
+    private function toGenre(GenreModel $object): GenreEntity
     {
         $entity = new GenreEntity(
             name: $object->name,

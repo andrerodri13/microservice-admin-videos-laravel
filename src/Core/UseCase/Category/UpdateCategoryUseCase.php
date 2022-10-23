@@ -21,11 +21,12 @@ class UpdateCategoryUseCase
     public function execute(CategoryUpdateInputDto $input): CategoryUpdateOutputDto
     {
         $category = $this->repository->findById($input->id);
-
         $category->update(
             name: $input->name,
             description: $input->description ?? $category->description,
         );
+        ((bool)$input->isActive) ? $category->activate() : $category->disable();
+
 
         $categoryUpdated = $this->repository->update($category);
 
