@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\Repositories\Transaction\DBTransaction;
-use App\Repositories\Eloquent\{CategoryEloquentRepository};
-use Core\Domain\Repository\{CategoryRepositoryInterface};
+use App\Repositories\Eloquent\{CategoryEloquentRepository, GenreEloquentRepository};
+use Core\Domain\Repository\{CategoryRepositoryInterface, GenreRepositoryInterface};
 use Core\UseCase\Interfaces\TransactionInterface;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(CategoryRepositoryInterface::class, CategoryEloquentRepository::class);
+        $this->app->singleton(GenreRepositoryInterface::class, GenreEloquentRepository::class);
 
         /**
          * DB Transaction
