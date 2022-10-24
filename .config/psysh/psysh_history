@@ -1,3 +1,4 @@
 \z
 \App\Models\Genre::factory()->count(100)->create();
 \App\Models\Category::factory()->count(100)->create();
+exit;
