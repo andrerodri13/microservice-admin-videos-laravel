@@ -14,7 +14,7 @@ class CastMember extends Model
         'id',
         'name',
         'type',
-//        'created_at'
+        'created_at'
     ];
 
     public $incrementing = false;

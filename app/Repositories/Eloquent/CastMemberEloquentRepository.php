@@ -59,7 +59,7 @@ class CastMemberEloquentRepository implements CastMemberRepositoryInterface
     {
         $query = $this->model;
         if ($filter) {
-            $query->where('name', 'LIKE', "%{$filter}%");
+           $query = $query->where('name', 'LIKE', "%{$filter}%");
         }
         $query->orderBy('name', $order);
         $dataDb = $query->paginate($totalPage);

@@ -59,7 +59,7 @@ class CategoryEloquentRepository implements CategoryRepositoryInterface
     {
         $query = $this->model;
         if ($filter) {
-            $query->where('name', 'LIKE', "%{$filter}%");
+            $query = $query->where('name', 'LIKE', "%{$filter}%");
         }
         $query->orderBy('id', $order);
         $paginator = $query->paginate();
