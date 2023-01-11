@@ -2,17 +2,16 @@
 
 namespace Core\Domain\Entity;
 
-use Core\Domain\Entity\Traits\MethodsMagicsTrait;
 use Core\Domain\Enum\Rating;
+use Core\Domain\Factory\VideoValidatorFactory;
+use Core\Domain\Notification\NotificationException;
 use Core\Domain\ValueObject\Image;
 use Core\Domain\ValueObject\Media;
 use Core\Domain\ValueObject\Uuid;
 use DateTime;
 
-class Video
+class Video extends Entity
 {
-    use MethodsMagicsTrait;
-
     protected array $categoriesId = [];
     protected array $genresId = [];
     protected array $castMembersId = [];
@@ -34,8 +33,11 @@ class Video
         protected ?Image    $bannerFile = null,
     )
     {
+        parent::__construct();
+
         $this->id = $this->id ?? Uuid::ramdom();
         $this->createdAt = $this->createdAt ?? new DateTime();
+        $this->validation();
     }
 
 
@@ -92,6 +94,18 @@ class Video
     public function videoFile(): ?Media //? - Obj Media ou null
     {
         return $this->videoFile;
+    }
+
+    protected function validation()
+    {
+        VideoValidatorFactory::create()->validate($this);
+
+
+        if ($this->notification->hasErrors()) {
+            throw new NotificationException(
+                $this->notification->messages('video')
+            );
+        }
     }
 
 }

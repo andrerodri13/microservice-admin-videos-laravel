@@ -5,6 +5,8 @@ namespace Tests\Unit\Domain\Entity;
 use Core\Domain\Entity\Video;
 use Core\Domain\Enum\MediaStatus;
 use Core\Domain\Enum\Rating;
+use Core\Domain\Exception\EntityValidationException;
+use Core\Domain\Notification\NotificationException;
 use Core\Domain\ValueObject\Image;
 use Core\Domain\ValueObject\Media;
 use Core\Domain\ValueObject\Uuid as ValueObjectUuid;
@@ -333,5 +335,18 @@ class VideoUnitTest extends TestCase
         $this->assertEquals('test-path/banner.png', $entity->bannerFile()->path());
     }
 
+    public function testException()
+    {
+        $this->expectException(NotificationException::class);
+
+        new Video(
+            title: 'Ne',
+            description: 'de',
+            yearLaunched: 2020,
+            duration: 120,
+            opened: true,
+            rating: Rating::RATE12,
+        );
+    }
 
 }
