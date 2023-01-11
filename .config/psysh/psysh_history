@@ -3,3 +3,4 @@
 \App\Models\Category::factory()->count(100)->create();
 exit;
 \App\Models\CastMember::factory()->count(100)->create();
+exit
