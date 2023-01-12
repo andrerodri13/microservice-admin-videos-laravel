@@ -6,5 +6,5 @@ use Core\Domain\Entity\Entity;
 
 interface VideoRepositoryInterface extends EntityRepositoryInterface
 {
-    public function uptadeMedia(Entity $entity): Entity;
+    public function updateMedia(Entity $entity): Entity;
 }

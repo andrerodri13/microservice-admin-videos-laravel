@@ -59,7 +59,7 @@ class CastMemberEloquentRepository implements CastMemberRepositoryInterface
     {
         $query = $this->model;
         if ($filter) {
-           $query = $query->where('name', 'LIKE', "%{$filter}%");
+            $query = $query->where('name', 'LIKE', "%{$filter}%");
         }
         $query->orderBy('name', $order);
         $dataDb = $query->paginate($totalPage);
@@ -98,5 +98,13 @@ class CastMemberEloquentRepository implements CastMemberRepositoryInterface
             id: new ValueObjectUuid($model->id),
             createdAt: $model->created_at
         );
+    }
+
+    public function getIdsListIds(array $castMembersIds = []): array
+    {
+        return $this->model
+            ->whereIn('id', $castMembersIds)
+            ->pluck('id')
+            ->toArray();
     }
 }

@@ -4,7 +4,8 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Category as ModelCategory;
 use App\Repositories\Presenters\PaginatorPresenter;
-use Core\Domain\Entity\Category as EntityCategory;
+use Core\Domain\Entity\Category as Category;
+use Core\Domain\Entity\Entity as Entity;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\CategoryRepositoryInterface;
 use Core\Domain\Repository\PaginationInterface;
@@ -21,7 +22,7 @@ class CategoryEloquentRepository implements CategoryRepositoryInterface
         $this->model = $category;
     }
 
-    public function insert(EntityCategory $entityCategory): EntityCategory
+    public function insert(Entity $entityCategory): Entity
     {
         $category = $this->model->create([
             'id' => $entityCategory->id(),
@@ -34,7 +35,7 @@ class CategoryEloquentRepository implements CategoryRepositoryInterface
         return $this->toCategory($category);
     }
 
-    public function findById(string $categoryId): EntityCategory
+    public function findById(string $categoryId): Category
     {
         if (!$category = $this->model->find($categoryId)) {
             throw new NotFoundException("Category Not Found");
@@ -67,7 +68,7 @@ class CategoryEloquentRepository implements CategoryRepositoryInterface
         return new PaginatorPresenter($paginator);
     }
 
-    public function update(EntityCategory $category): EntityCategory
+    public function update(Entity $category): Entity
     {
         if (!$categoryDb = $this->model->find($category->id)) {
             throw new NotFoundException("Category not found");
@@ -92,9 +93,9 @@ class CategoryEloquentRepository implements CategoryRepositoryInterface
         return $categoryDb->delete();
     }
 
-    private function toCategory(object $object): EntityCategory
+    private function toCategory(object $object): Category
     {
-        $entity = new EntityCategory(
+        $entity = new Category(
             id: $object->id,
             name: $object->name,
             description: $object->description,
