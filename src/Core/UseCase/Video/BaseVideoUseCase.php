@@ -33,10 +33,11 @@ abstract class BaseVideoUseCase
 
     protected function storageFiles(object $input): void
     {
-        $path = $this->builder->getEntity()->id();
+        $entity = $this->builder->getEntity();
+        $path = $entity->id();
         if ($pathVideoFile = $this->storageFile($path, $input->videoFile)) {
             $this->builder->addMediaVideo($pathVideoFile, MediaStatus::PROCESSING);
-            $this->eventManager->dispatch(new VideoCreatedEvent($this->entity));
+            $this->eventManager->dispatch(new VideoCreatedEvent($entity));
         }
 
         if ($pathTrailerFile = $this->storageFile($path, $input->trailerFile)) {
@@ -70,26 +71,26 @@ abstract class BaseVideoUseCase
     protected function validateAllIds(object $input)
     {
         $this->validateIds(
+            ids: $input->categories,
             repository: $this->repositoryCategory,
             singularLabel: 'Category',
-            ids: $input->categories,
             pluralLabel: 'Categories'
         );
 
         $this->validateIds(
+            ids: $input->genres,
             repository: $this->repositoryGenre,
             singularLabel: 'Genre',
-            ids: $input->genres,
         );
 
         $this->validateIds(
+            ids: $input->castMembers,
             repository: $this->repositoryCastMember,
             singularLabel: 'Cast Member',
-            ids: $input->castMembers,
         );
     }
 
-    protected function validateIds($repository, string $singularLabel, array $ids = [], ?string $pluralLabel = null)
+    protected function validateIds(array $ids, $repository, string $singularLabel, ?string $pluralLabel = null)
     {
         $idsDb = $repository->getIdsListIds($ids);
 
