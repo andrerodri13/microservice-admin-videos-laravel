@@ -15,9 +15,9 @@ class CreateVideoUseCaseTest extends BaseVideoUseCase
     }
 
     function inputDTO(
-        array $categories = [],
-        array $genres = [],
-        array $castMembers = [],
+        array  $categories = [],
+        array  $genres = [],
+        array  $castMembers = [],
         ?array $videoFile = null,
         ?array $trailerFile = null,
         ?array $thumbFile = null,
