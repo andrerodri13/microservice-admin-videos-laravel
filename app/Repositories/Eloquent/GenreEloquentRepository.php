@@ -53,7 +53,7 @@ class GenreEloquentRepository implements GenreRepositoryInterface
         $result = $this->model
             ->where(function ($query) use ($filter) {
                 if ($filter) {
-                    $query->where('name', 'LIKE', "{$filter}");
+                    $query->where('name', 'LIKE', "%{$filter}%");
                 }
             })
             ->orderBy('name', $order)
@@ -67,7 +67,7 @@ class GenreEloquentRepository implements GenreRepositoryInterface
         $result = $this->model
             ->where(function ($query) use ($filter) {
                 if ($filter) {
-                    $query->where('name', 'LIKE', "{$filter}");
+                    $query->where('name', 'LIKE', "%{$filter}%");
                 }
             })
             ->orderBy('name', $order)
