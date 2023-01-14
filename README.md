@@ -79,3 +79,11 @@ php artisan key:generate
 
 Acesse o projeto
 [http://localhost:8000](http://localhost:8000)
+
+## Minhas Notas
+
+Para rodar o projeto é necessario gerar a chave do usuario
+Google Cloud com a permissao do Cloud Storage
+e colocar o arquivo no diretorio 
+
+`/storage/cloud/gcs.json`
