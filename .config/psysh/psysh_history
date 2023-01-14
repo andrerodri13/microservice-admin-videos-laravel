@@ -4,3 +4,6 @@
 exit;
 \App\Models\CastMember::factory()->count(100)->create();
 exit
+\App\Models\Video::factory()->count(10)->create();
+exit
+exit
