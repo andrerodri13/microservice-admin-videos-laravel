@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Events;
+namespace Tests\Stubs;
 
 use Core\UseCase\Video\Interfaces\VideoEventManagerInterface;
 
-class VideoEvent implements VideoEventManagerInterface
+class VideoEventStub implements VideoEventManagerInterface
+
 {
     public function dispatch(object $event): void
     {
-        event($event);
+        //
     }
 }
-
-

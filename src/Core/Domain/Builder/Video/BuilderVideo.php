@@ -33,7 +33,7 @@ class BuilderVideo implements Builder
         return $this;
     }
 
-    protected function addIds(object $input)
+    public function addIds(object $input)
     {
         //categories_ids in Entity
         foreach ($input->categories as $categoryId) {

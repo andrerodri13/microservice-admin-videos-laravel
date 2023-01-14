@@ -26,6 +26,6 @@ class SendVideoToMicroEncoder
      */
     public function handle($event)
     {
-        Log::info($event->getPayload);
+        Log::info($event->getPayload());
     }
 }

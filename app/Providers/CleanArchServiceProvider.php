@@ -3,22 +3,18 @@
 namespace App\Providers;
 
 use App\Events\{VideoEvent};
-use App\Services\Storage\{FileStorage};
-use App\Repositories\Eloquent\{
-    CastMemberEloquentRepository,
+use App\Repositories\Eloquent\{CastMemberEloquentRepository,
     CategoryEloquentRepository,
     GenreEloquentRepository,
-    VideoEloquentRepository
-};
-use Core\Domain\Repository\{
-    CastMemberRepositoryInterface,
+    VideoEloquentRepository};
+use App\Repositories\Transaction\DBTransaction;
+use App\Services\Storage\{FileStorage};
+use Core\Domain\Repository\{CastMemberRepositoryInterface,
     CategoryRepositoryInterface,
     GenreRepositoryInterface,
-    VideoRepositoryInterface
-};
-use App\Repositories\Transaction\DBTransaction;
-
-use Core\UseCase\Interfaces\{EventManagerInterface, FileStorageInterface, TransactionInterface};
+    VideoRepositoryInterface};
+use Core\UseCase\Interfaces\{FileStorageInterface, TransactionInterface};
+use Core\UseCase\Video\Interfaces\VideoEventManagerInterface;
 use Illuminate\Support\ServiceProvider;
 
 class CleanArchServiceProvider extends ServiceProvider
@@ -33,7 +29,7 @@ class CleanArchServiceProvider extends ServiceProvider
         $this->bindingRepositories();
 
         $this->app->singleton(FileStorageInterface::class, FileStorage::class);
-        $this->app->singleton(EventManagerInterface::class, VideoEvent::class);
+        $this->app->singleton(VideoEventManagerInterface::class, VideoEvent::class);
         /**
          * DB Transaction
          */

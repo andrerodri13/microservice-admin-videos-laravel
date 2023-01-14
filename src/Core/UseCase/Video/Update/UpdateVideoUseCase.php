@@ -18,6 +18,7 @@ class UpdateVideoUseCase extends BaseVideoUseCase
     public function execute(UpdateInputVideoDTO $input): UpdateOutputVideoDTO
     {
         $this->validateAllIds($input);
+
         $entity = $this->repository->findById($input->id);
         $entity->update(
             title: $input->title,
@@ -25,6 +26,7 @@ class UpdateVideoUseCase extends BaseVideoUseCase
         );
 
         $this->builder->setEntity($entity);
+        $this->builder->addIds($input);
 
         try {
             $this->repository->update($this->builder->getEntity());
