@@ -13,3 +13,8 @@ q
 \App\Models\Genre::factory()->count(50)->create();
 \App\Models\CastMember::factory()->count(50)->create();
 q
+\App\Models\Category::factory()->create();
+\App\Models\Genre::factory()->create();
+\App\Models\CastMember::factory()->create();
+Q
+q

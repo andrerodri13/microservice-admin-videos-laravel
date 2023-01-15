@@ -2,17 +2,21 @@
 
 namespace App\Providers;
 
+use App\Services\AMQP\AMQPInterface;
+use App\Services\AMQP\PhpAmqpService;
 use App\Events\{VideoEvent};
 use App\Repositories\Eloquent\{CastMemberEloquentRepository,
     CategoryEloquentRepository,
     GenreEloquentRepository,
-    VideoEloquentRepository};
+    VideoEloquentRepository
+};
 use App\Repositories\Transaction\DBTransaction;
 use App\Services\Storage\{FileStorage};
 use Core\Domain\Repository\{CastMemberRepositoryInterface,
     CategoryRepositoryInterface,
     GenreRepositoryInterface,
-    VideoRepositoryInterface};
+    VideoRepositoryInterface
+};
 use Core\UseCase\Interfaces\{FileStorageInterface, TransactionInterface};
 use Core\UseCase\Video\Interfaces\VideoEventManagerInterface;
 use Illuminate\Support\ServiceProvider;
@@ -36,6 +40,11 @@ class CleanArchServiceProvider extends ServiceProvider
         $this->app->bind(
             TransactionInterface::class, DBTransaction::class
         );
+
+        /**
+         * Services
+         */
+        $this->app->bind(AMQPInterface::class, PhpAmqpService::class);
     }
 
     /**
