@@ -3,9 +3,9 @@
 namespace Tests\Unit\UseCase\Video;
 
 
+use Core\Domain\Repository\PaginationInterface;
 use Core\Domain\Repository\VideoRepositoryInterface;
 use Core\UseCase\Video\Paginate\DTO\PaginateInputVideoDTO;
-use Core\UseCase\Video\Paginate\DTO\PaginateOutputVideoDTO;
 use Core\UseCase\Video\Paginate\ListVideosUseCase;
 use Mockery;
 use PHPUnit\Framework\TestCase;
@@ -26,7 +26,7 @@ class ListVideosUseCaseUnitTest extends TestCase
             input: $this->mockInputDTO($this->mockInputDTO()),
         );
 
-        $this->assertInstanceOf(PaginateOutputVideoDTO::class, $response);
+        $this->assertInstanceOf(PaginationInterface::class, $response);
 
         Mockery::close();
     }
