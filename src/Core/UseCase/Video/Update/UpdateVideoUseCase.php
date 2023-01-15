@@ -57,6 +57,7 @@ class UpdateVideoUseCase extends BaseVideoUseCase
             duration: $entity->duration,
             opened: $entity->opened,
             rating: $entity->rating,
+            createdAt: $entity->createdAt(),
             categories: $entity->categoriesId,
             genres: $entity->genresId,
             castMembers: $entity->castMembersId,
