@@ -7,3 +7,9 @@ exit
 \App\Models\Video::factory()->count(10)->create();
 exit
 exit
+\App\Models\Video::factory()->count(90)->create();
+q
+\App\Models\Category::factory()->count(50)->create();
+\App\Models\Genre::factory()->count(50)->create();
+\App\Models\CastMember::factory()->count(50)->create();
+q
