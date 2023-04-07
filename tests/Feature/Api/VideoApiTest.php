@@ -7,9 +7,11 @@ use App\Models\Video;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
+use Tests\Traits\WithouthMiddlewareTrait;
 
 class VideoApiTest extends TestCase
 {
+    use WithouthMiddlewareTrait;
 
     protected $endpoint = '/api/videos';
     protected $serializedFields = [

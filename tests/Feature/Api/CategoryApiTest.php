@@ -2,12 +2,16 @@
 
 namespace Tests\Feature\Api;
 
+use App\Http\Middleware\Authenticate;
 use App\Models\Category;
+use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Http\Response;
 use Tests\TestCase;
+use Tests\Traits\WithouthMiddlewareTrait;
 
 class CategoryApiTest extends TestCase
 {
+    use WithouthMiddlewareTrait;
 
     protected $endPoint = '/api/categories';
 

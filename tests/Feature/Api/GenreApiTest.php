@@ -8,9 +8,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
 use Tests\TestCase;
+use Tests\Traits\WithouthMiddlewareTrait;
 
 class GenreApiTest extends TestCase
 {
+    use WithouthMiddlewareTrait;
 
     protected $endpoint = '/api/genres';
 
