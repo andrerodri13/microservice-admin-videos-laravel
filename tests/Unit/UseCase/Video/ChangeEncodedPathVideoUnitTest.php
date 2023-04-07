@@ -62,7 +62,7 @@ class ChangeEncodedPathVideoUnitTest extends TestCase
             ->andThrow(new NotFoundException('Not Found Video'));
 
         $mockRepository->shouldReceive('updateMedia')
-            ->times(1);
+            ->times(0);
 
         $useCase = new ChangeEncodePathVideo(repository: $mockRepository);
 
